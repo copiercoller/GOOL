@@ -86,7 +86,7 @@ public class GOOLCompiler {
 			concreteJavaToConcretePlatform(
 					XmlPlatform.getInstance(filesNonChange), files);
 			// TODO: same for android & Objc
-			concreteJavaToConcretePlatform(AndroidPlatform.getInstance(), files);
+			//concreteJavaToConcretePlatform(AndroidPlatform.getInstance(), files);
 			concreteJavaToConcretePlatform(ObjcPlatform.getInstance(), files);
 
 		} catch (Exception e) {
