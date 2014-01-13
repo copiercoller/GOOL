@@ -18,6 +18,8 @@
 package gool.generator.csharp;
 
 import gool.ast.core.BinaryOperation;
+import gool.ast.core.Break;
+import gool.ast.core.Case;
 import gool.ast.core.Catch;
 import gool.ast.core.ClassDef;
 import gool.ast.core.ClassNew;
@@ -36,6 +38,8 @@ import gool.ast.core.Operator;
 import gool.ast.core.Package;
 import gool.ast.core.ParentCall;
 import gool.ast.core.RecognizedDependency;
+import gool.ast.core.Statement;
+import gool.ast.core.Switch;
 import gool.ast.core.Throw;
 import gool.ast.core.ToStringCall;
 import gool.ast.core.Try;
@@ -565,5 +569,47 @@ public class CSharpGenerator extends CommonCodeGenerator /*implements
 
 		return result;
 	}
+	
+	@Override
+	public String getCode(Break breake) {
+		String out = formatIndented("break");
+		if (breake.getName() != null) {
+			out =formatIndented("goto "+ breake.getName().toString());
+		}
+		return out;
+	}
+	
+	@Override
+	public String getCode(Switch switche) {
+		String out = formatIndented("switch (%s) { \n", switche.getCondition());
+		boolean isBreak=true;
+		for (Case cas : switche.getCases() )
+		{	
+			if (!isBreak)
+			{
+				if (cas.getCondition()!= null)
+				out+= formatIndented("\t \tgoto case %s; \n",cas.getCondition());
+				else
+				out+= formatIndented("\t \tgoto default; \n");	
+			}
+			
+			out+= formatIndented("%s",cas);
+			isBreak = false;
+			for (Statement stm : cas.getStatements())
+			{
+				if (stm instanceof Break)
+				{
+					isBreak = true;
+				}
+			}
+		}
+		if(!isBreak)
+		{
+			out+=formatIndented("\t \tbreak; \n");
+		}
+		out+= formatIndented("}");
+		return out;
+	}
+
 
 }

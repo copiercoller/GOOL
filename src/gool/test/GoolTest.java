@@ -500,7 +500,8 @@ public class GoolTest {
 
 	@Test
 	public void unknownOperator() throws Exception {
-		String input = TestHelper.surroundWithClassMain(
+		String input ="import java.lang.Math;"
+				+TestHelper.surroundWithClassMain(
 				"int total = 1 ^ 0; System.out.println(total);",
 				MAIN_CLASS_NAME);
 		String expected = "";
@@ -516,6 +517,16 @@ public class GoolTest {
 				+ "default : System.out.println(3);}",
 				MAIN_CLASS_NAME);
 		String expected = "2";
+		//excludePlatformForThisTest((Platform) CSharpPlatform.getInstance());
+		compareResultsDifferentPlatforms(input, expected);
+	}
+	
+	@Test
+	public void testmath() throws Exception {
+		String input = TestHelper.surroundWithClassMain(
+				"System.out.println(Math.pow(2,3));",
+				MAIN_CLASS_NAME);
+		String expected = "8";
 		excludePlatformForThisTest((Platform) CSharpPlatform.getInstance());
 		compareResultsDifferentPlatforms(input, expected);
 	}

@@ -20,6 +20,8 @@ package gool.generator.python;
 import gool.ast.core.ArrayNew;
 import gool.ast.core.BinaryOperation;
 import gool.ast.core.Block;
+import gool.ast.core.Break;
+import gool.ast.core.Case;
 import gool.ast.core.CastExpression;
 import gool.ast.core.Catch;
 import gool.ast.core.ClassDef;
@@ -51,6 +53,7 @@ import gool.ast.core.ParentCall;
 import gool.ast.core.RecognizedDependency;
 import gool.ast.core.Return;
 import gool.ast.core.Statement;
+import gool.ast.core.Switch;
 import gool.ast.core.This;
 import gool.ast.core.ThisCall;
 import gool.ast.core.Throw;
@@ -1170,6 +1173,25 @@ public class PythonGenerator extends CommonCodeGenerator implements
 		
 
 		return result;
+	}
+	
+	// TODO create switch case with if
+	@Override
+	public String getCode(Case cas) {
+		String out = formatIndented("#No swith case in Python");;
+		return out;
+	}
+	
+	@Override
+	public String getCode(Break breake) {
+		String out = formatIndented("#No swith case in Python");
+		return out;
+	}
+	
+	@Override
+	public String getCode(Switch switche) {
+		String out = formatIndented("#No swith case in Python");
+		return out;
 	}
 
 }
