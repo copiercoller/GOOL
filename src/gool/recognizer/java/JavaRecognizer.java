@@ -44,7 +44,10 @@ import gool.ast.core.Expression;
 import gool.ast.core.ExpressionUnknown;
 import gool.ast.core.Field;
 import gool.ast.core.For;
+import gool.ast.core.Switch;
+import gool.ast.core.Break;
 import gool.ast.core.If;
+import gool.ast.core.Case;
 import gool.ast.core.InitCall;
 import gool.ast.core.Language;
 import gool.ast.core.MainMeth;
@@ -199,6 +202,7 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.JCClassDecl;
 import com.sun.tools.javac.tree.JCTree.JCModifiers;
 import com.sun.tools.javac.tree.TreeInfo;
+import com.sun.tools.javac.util.Name;
 
 /**
  * The JavaRecognizer does the work of converting Sun's abstract Java to
@@ -796,12 +800,39 @@ public class JavaRecognizer extends TreePathScanner<Object, Context> {
 
 	@Override
 	public Object visitBreak(BreakTree n, Context context) {
-		return new ExpressionUnknown(goolType(n, context), n.toString());
+		return new Break((Name) n.getLabel());
 	}
 
-	@Override
+	@Override//TODO case
 	public Object visitCase(CaseTree n, Context context) {
-		return new ExpressionUnknown(goolType(n, context), n.toString());
+		Expression condition; 
+		if (n.getExpression() != null)
+		{
+			condition = (Expression) n.getExpression().accept(this,context);
+		}
+		else {
+			condition = null;
+		}
+		 List<? extends StatementTree> nodestmts = n.getStatements();
+		List<Statement> Stmts =new ArrayList<Statement>();
+		for (StatementTree stmt : nodestmts) {
+			Statement stm = (Statement) (stmt.accept(this, context) );
+			Stmts.add(stm);
+		}
+		return new Case(condition, Stmts);
+	}
+	
+	@Override
+	public Object visitSwitch(SwitchTree node, Context p) {
+		Expression condition = (Expression) node.getExpression().accept(this,
+				p);
+		 List<? extends CaseTree> nodestmts = node.getCases() ;
+		List<Case> Stmts =new ArrayList<Case>();
+		for (CaseTree stmt : nodestmts) {
+			Case stm = (Case) (stmt.accept(this, p) );
+			Stmts.add(stm);
+		}
+		return new Switch(condition, Stmts);
 	}
 
 	@Override
@@ -864,10 +895,6 @@ public class JavaRecognizer extends TreePathScanner<Object, Context> {
 
 	}
 
-	@Override
-	public Object visitSwitch(SwitchTree node, Context p) {
-		return new ExpressionUnknown(goolType(node, p), node.toString());
-	}
 
 	@Override
 	public Object visitSynchronized(SynchronizedTree node, Context p) {
@@ -1159,6 +1186,7 @@ public class JavaRecognizer extends TreePathScanner<Object, Context> {
 
 		// TODO identifiers. Create a specific node to access to class literal
 		// (i.e. when calling static members).
+		
 
 		if (type.getName().equals(n.getName().toString())) {
 			return new Constant(type, n.getName().toString());

@@ -22,6 +22,8 @@ import gool.ast.core.ArrayNew;
 import gool.ast.core.Assign;
 import gool.ast.core.BinaryOperation;
 import gool.ast.core.Block;
+import gool.ast.core.Break;
+import gool.ast.core.Case;
 import gool.ast.core.CastExpression;
 import gool.ast.core.ClassDef;
 import gool.ast.core.ClassFree;
@@ -49,6 +51,7 @@ import gool.ast.core.Package;
 import gool.ast.core.RecognizedDependency;
 import gool.ast.core.Return;
 import gool.ast.core.Statement;
+import gool.ast.core.Switch;
 import gool.ast.core.This;
 import gool.ast.core.ThisCall;
 import gool.ast.core.TypeDependency;
@@ -356,7 +359,44 @@ public abstract class CommonCodeGenerator implements CodeGenerator {
 		}
 		return out;
 	}
+	
+	@Override
+	public String getCode(Switch switche) {
+		String out = formatIndented("switch (%s) { \n", switche.getCondition());
+		for (Case cas : switche.getCases() )
+		{
+			out+= formatIndented("%s",cas);
+		}
+		out+= formatIndented("}");
+		return out;
+	}
 
+	@Override
+	public String getCode(Break breake) {
+		String out = formatIndented("break");
+		if (breake.getName() != null) {
+			out +=formatIndented(breake.getName().toString());
+		}
+		return out;
+	}
+
+	@Override
+	public String getCode(Case cas) {
+		String out;
+		if ( cas.getCondition() == null )
+		{
+			out = formatIndented("\tdefault :\n");
+		} else
+		{
+			out = formatIndented("\tcase %s :\n", cas.getCondition());
+		}
+		
+		for ( Statement stm : cas.getStatements())
+		{
+			out+=formatIndented("\t\t%s;\n",stm );
+		}
+		return out;
+	}
 	@Override
 	public String getCode(Collection<Modifier> modifiers) {
 		StringBuilder sb = new StringBuilder();

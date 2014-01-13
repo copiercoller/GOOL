@@ -51,9 +51,9 @@ public class GoolTest {
 			(Platform) JavaPlatform.getInstance(),
 			(Platform) CSharpPlatform.getInstance(),
 			(Platform) CppPlatform.getInstance(),
-			(Platform) PythonPlatform.getInstance()// ,
+			(Platform) PythonPlatform.getInstance() 
 //			 (Platform) AndroidPlatform.getInstance() ,
-//			 (Platform) ObjcPlatform.getInstance()
+			 //(Platform) ObjcPlatform.getInstance()
 
 			);
 
@@ -506,7 +506,20 @@ public class GoolTest {
 		String expected = "";
 		compareResultsDifferentPlatforms(input, expected);
 	}
-
+	
+	@Test
+	public void testcase() throws Exception {
+		String input = TestHelper.surroundWithClassMain(
+				"int i=2;switch(i){"
+				+ "case 1: System.out.println(1);"
+				+ "case 2: System.out.println(2);break;"
+				+ "default : System.out.println(3);}",
+				MAIN_CLASS_NAME);
+		String expected = "2";
+		excludePlatformForThisTest((Platform) CSharpPlatform.getInstance());
+		compareResultsDifferentPlatforms(input, expected);
+	}
+	
 	@Test
 	public void exceptionThrowTest() throws Exception {
 		String input = TestHelper

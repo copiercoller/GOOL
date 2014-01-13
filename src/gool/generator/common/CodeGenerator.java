@@ -24,6 +24,7 @@ import gool.ast.core.BinaryOperation;
 import gool.ast.core.Block;
 import gool.ast.core.CastExpression;
 import gool.ast.core.Catch;
+import gool.ast.core.Case;
 import gool.ast.core.ClassDef;
 import gool.ast.core.ClassFree;
 import gool.ast.core.ClassNew;
@@ -56,6 +57,8 @@ import gool.ast.core.ParentCall;
 import gool.ast.core.RecognizedDependency;
 import gool.ast.core.Return;
 import gool.ast.core.This;
+import gool.ast.core.Switch;
+import gool.ast.core.Break;
 import gool.ast.core.ThisCall;
 import gool.ast.core.Throw;
 import gool.ast.core.ToStringCall;
@@ -119,7 +122,11 @@ public interface CodeGenerator {
 	void addCustomDependency(String key, Dependency value);
 
 	String getCode(ArrayAccess arrayAccess);
-
+	
+	String getCode(Switch switche);
+	
+	String getCode(Break breake);
+	
 	String getCode(ArrayNew arrayNew);
 
 	String getCode(Assign assign);
@@ -192,6 +199,7 @@ public interface CodeGenerator {
 
 	String getCode(GoolCall goolCall);
 
+	String getCode(Case cas);
 	/**
 	 * Produces code for an if statement.
 	 * 

@@ -75,19 +75,18 @@ public class GOOLCompiler {
 
 			Collection<File> filesNonChange = getFilesInFolderNonExe(folder,
 					extToNCopy);
-			concreteJavaToConcretePlatform(
-					JavaPlatform.getInstance(filesNonChange), files);
-			concreteJavaToConcretePlatform(
-					CSharpPlatform.getInstance(filesNonChange), files);
+			concreteJavaToConcretePlatform(JavaPlatform.getInstance(filesNonChange), files);
+	//		concreteJavaToConcretePlatform(
+		//			CSharpPlatform.getInstance(filesNonChange), files);
 			concreteJavaToConcretePlatform(
 					CppPlatform.getInstance(filesNonChange), files);
-			concreteJavaToConcretePlatform(
-					PythonPlatform.getInstance(filesNonChange), files);
-			concreteJavaToConcretePlatform(
-					XmlPlatform.getInstance(filesNonChange), files);
+			//concreteJavaToConcretePlatform(
+			//		PythonPlatform.getInstance(filesNonChange), files);
+			//concreteJavaToConcretePlatform(
+				//	XmlPlatform.getInstance(filesNonChange), files);
 			// TODO: same for android & Objc
 			//concreteJavaToConcretePlatform(AndroidPlatform.getInstance(), files);
-			concreteJavaToConcretePlatform(ObjcPlatform.getInstance(), files);
+			//concreteJavaToConcretePlatform(ObjcPlatform.getInstance(), files);
 
 		} catch (Exception e) {
 			Log.e(e);

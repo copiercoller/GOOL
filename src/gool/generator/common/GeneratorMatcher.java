@@ -118,8 +118,7 @@ public class GeneratorMatcher {
 
 	static private String getPathOfOutputMatchDir(String goolClass) {
 		String goolPackageName = goolClass.replace('.', '/');
-		return "src/gool/generator/" + OutputLang.toString().toLowerCase()
-				+ "/matching/" + goolPackageName + "/";
+		return "src/gool/generator/" + OutputLang.toString().toLowerCase()+ "/matching/" + goolPackageName + "/";
 	}
 
 	static private String getPathOfOutputClassMatchFile(String goolClass) {
