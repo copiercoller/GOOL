@@ -555,7 +555,7 @@ public class GoolTest {
 		}
 	}
 	
-	//******************************* Own Test *****************************//
+	//****************************** Own Test *****************************//
 	@Test
 	public void condTernaire() throws Exception {
 		String input = TestHelper.surroundWithClassMain(
