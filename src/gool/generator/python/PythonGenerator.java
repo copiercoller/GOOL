@@ -1184,13 +1184,54 @@ public class PythonGenerator extends CommonCodeGenerator implements
 	
 	@Override
 	public String getCode(Break breake) {
-		String out = formatIndented("#No swith case in Python");
+		String out = "";
+		formatIndented("break");
+		if (breake.getName() != null) {
+			out =formatIndented("gotox = "+ breake.getName().toString());
+		}
 		return out;
 	}
 	
 	@Override
 	public String getCode(Switch switche) {
-		String out = formatIndented("#No swith case in Python");
+		String out = formatIndented("#switch case in Python \n");
+		out += formatIndented("case = \"default\" \n");
+		out += formatIndented("switch =0 \n");
+		boolean isBreak=true;
+		for (Case cas : switche.getCases() )
+		{	
+			if (!isBreak)
+			{
+				if (cas.getCondition()!= null)
+				out+= formatIndented("\tcase = %s; \n",cas.getCondition());
+				else
+				out+= formatIndented("\tcase =\"default\"; \n");	
+			}
+			
+			if (cas.getCondition() != null)
+			{
+			out+= formatIndented("if case==%s or case==\"default\" and %s==%s :\n",cas.getCondition(),switche.getCondition(),cas.getCondition());
+			}else
+			{
+				out+= formatIndented("if switch == 0 or case==\"default\" : \n");
+			}
+			out += formatIndented("\tswitch =1 \n");
+			isBreak = false;
+			for (Statement stm : cas.getStatements())
+			{
+				
+				
+				if (stm instanceof Break)
+				{
+					isBreak = true;
+					
+				}
+					out+= formatIndented("\t%s \n",stm);	
+			}
+		
+		}
+		out += formatIndented("#End switch case in Python \n");
+		
 		return out;
 	}
 

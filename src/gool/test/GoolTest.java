@@ -511,12 +511,17 @@ public class GoolTest {
 	@Test
 	public void testcase() throws Exception {
 		String input = TestHelper.surroundWithClassMain(
-				"int i=2;switch(i){"
-				+ "case 1: System.out.println(1);"
-				+ "case 2: System.out.println(2);break;"
-				+ "default : System.out.println(3);}",
+				"int i=1;"
+				+ "int j=0;"
+				+ "switch(i){"
+				+ "case 1: j+=1;"
+				+ "case 2: j+=10;break;"
+				+ "case 3: j+=100;break;"
+				//+ "default : j+=1000;break;"
+				+ "}"
+				+ "System.out.println(j);",
 				MAIN_CLASS_NAME);
-		String expected = "2";
+		String expected = "11";
 		//excludePlatformForThisTest((Platform) CSharpPlatform.getInstance());
 		compareResultsDifferentPlatforms(input, expected);
 	}
