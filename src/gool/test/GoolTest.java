@@ -570,4 +570,91 @@ public class GoolTest {
 			executor.compare(platform);
 		}
 	}
+	
+	//****************************** Own Test *****************************//
+	@Test
+	public void condTernaire() throws Exception {
+		String input = TestHelper.surroundWithClassMain(
+				"int x = 10, y = 20;"
+				+ "int max = (x < y) ? y : x ;"
+				+ "System.out.println(max);", MAIN_CLASS_NAME);
+		String expected = "20";
+		compareResultsDifferentPlatforms(input, expected);
+	}
+	
+	@Test
+	public void simpleSwitch() throws Exception {
+		String input = TestHelper.surroundWithClassMain(
+				"int x = 1;"
+				+ "switch(x) {"
+				+ "case 1: System.out.println(\"pile\"); break;"
+				+ "default: System.out.println(\"face\");"
+				+ "}"
+				, MAIN_CLASS_NAME);
+		String expected = "pile";
+		compareResultsDifferentPlatforms(input, expected);
+	}
+	
+	@Test
+	public void simpleWhile() throws Exception {
+		String input = TestHelper
+				.surroundWithClassMain(
+						"int total = 0; int i = 0; do{ total ++; i++;}while(i < 4); System.out.println(total);",
+						MAIN_CLASS_NAME);
+		String expected = "4";
+		compareResultsDifferentPlatforms(input, expected);
+	}
+	
+	@Test
+	public void simpleDoWhile() throws Exception {
+		String input = TestHelper
+				.surroundWithClassMain(
+						"int total = 0; int i = 0; while(i < 4){ total ++; i++;} System.out.println(total);",
+						MAIN_CLASS_NAME);
+		String expected = "4";
+		compareResultsDifferentPlatforms(input, expected);
+	}
+	
+	@Test
+	public void genericity() throws Exception {
+		String input = "class Test<T, S> {"
+				+ "private T val1;"
+				+ "private S val2;"
+				+ "public static void main(String[] args){"
+				+ "}"
+				+ "}";
+		compareResultsDifferentPlatforms(input, "");
+	}
+	
+	@Test
+	public void inherit() throws Exception {
+		String input = "class Test extends B {"
+				+ "public static void main(String[] args){"
+				+ "Test t = new Test();"
+				+ "//t.ok();"
+				+ "}"
+				+ "}"
+				+ "class B {"
+				+ "public void ok() {"
+				+ "System.out.println(\"OK\");"
+				+ "}}";
+		compareResultsDifferentPlatforms(input, "");
+	}
+	
+	@Test
+	public void interfaces() throws Exception {
+		String input = "class Test implements B {"
+				+ "void ok() {"
+				+ "System.out.println(\"OK\");"
+				+ "}"
+				+ "public static void main(String[] args){"
+				+ "Test t = new Test();"
+				+ "t.ok();"
+				+ "}"
+				+ "}"
+				+ "interface B {"
+				+ "void ok();"
+				+ "}";
+		compareResultsDifferentPlatforms(input, "OK");
+	}
 }
