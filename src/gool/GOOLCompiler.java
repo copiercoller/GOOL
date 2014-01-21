@@ -31,6 +31,7 @@ import gool.generator.GeneratorHelper;
 import gool.generator.android.AndroidPlatform;
 import gool.generator.common.Platform;
 import gool.generator.cpp.CppPlatform;
+import gool.generator.js.JsPlatform;
 import gool.generator.csharp.CSharpPlatform;
 import gool.generator.java.JavaPlatform;
 import gool.generator.python.PythonPlatform;
@@ -76,12 +77,10 @@ public class GOOLCompiler {
 			Collection<File> filesNonChange = getFilesInFolderNonExe(folder,
 					extToNCopy);
 			concreteJavaToConcretePlatform(JavaPlatform.getInstance(filesNonChange), files);
-	//		concreteJavaToConcretePlatform(
-		//			CSharpPlatform.getInstance(filesNonChange), files);
-			concreteJavaToConcretePlatform(
-					CppPlatform.getInstance(filesNonChange), files);
-			//concreteJavaToConcretePlatform(
-			//		PythonPlatform.getInstance(filesNonChange), files);
+			concreteJavaToConcretePlatform(CSharpPlatform.getInstance(filesNonChange), files);
+			concreteJavaToConcretePlatform(CppPlatform.getInstance(filesNonChange), files);
+			concreteJavaToConcretePlatform(PythonPlatform.getInstance(filesNonChange), files);
+			concreteJavaToConcretePlatform(JsPlatform.getInstance(filesNonChange), files);
 			//concreteJavaToConcretePlatform(
 				//	XmlPlatform.getInstance(filesNonChange), files);
 			// TODO: same for android & Objc
