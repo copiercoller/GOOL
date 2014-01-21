@@ -101,244 +101,213 @@ public class JsGenerator extends CommonCodeGenerator /*
 	}
 
 	@Override
-	public String getCode(BinaryOperation binaryOp) {
-		if (!(binaryOp.getLeft() instanceof Constant)
-				&& binaryOp.getOperator() == Operator.EQUAL) {
-			return String.format("%s.equals(%s)", binaryOp.getLeft(),
-					binaryOp.getRight());
-		} else {
-			return super.getCode(binaryOp);
-		}
-	}
-
 	public String getCode(ClassNew classNew) {
-		return String.format("new %s(%s)", classNew.getType(),
-				StringUtils.join(classNew.getParameters(), ", "));
-	}
-
-	public String getCode(CustomDependency customDependency) {
-		if (!customDependencies.containsKey(customDependency.getName())) {
-			logger.info(String.format("Custom dependencies: %s, Desired: %s",
-					customDependencies, customDependency.getName()));
-			throw new IllegalArgumentException(
-					String.format(
-							"There is no equivalent type in Java for the GOOL type '%s'.",
-							customDependency.getName()));
-		}
-		return customDependencies.get(customDependency.getName()).toString();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(EnhancedForLoop enhancedForLoop) {
-		return formatIndented(
-				"for (%s : %s){%1}",
-				enhancedForLoop.getVarDec(),
-				(enhancedForLoop.getExpression().getType() instanceof TypeMap) ? String
-						.format("%s.entrySet()",
-								enhancedForLoop.getExpression())
-						: enhancedForLoop.getExpression(),
-				enhancedForLoop.getStatements());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(EqualsCall equalsCall) {
-		return String.format("%s.equals(%s)", equalsCall.getTarget(),
-				StringUtils.join(equalsCall.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListAddCall lac) {
-		return String.format("%s.add(%s)", lac.getExpression(),
-				StringUtils.join(lac.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListContainsCall lcc) {
-		return String.format("%s.contains(%s)", lcc.getExpression(),
-				StringUtils.join(lcc.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListGetCall lgc) {
-		return String.format("%s.get(%s)", lgc.getExpression(),
-				StringUtils.join(lgc.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListGetIteratorCall lgic) {
-		return String.format("%s.getIterator()", lgic.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListIsEmptyCall liec) {
-		return String.format("%s.isEmpty()", liec.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListRemoveAtCall lrc) {
-		return String.format("%s.remove(%s)", lrc.getExpression(),
-				StringUtils.join(lrc.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListRemoveCall lrc) {
-		return String.format("%s.remove(%s)", lrc.getExpression(),
-				StringUtils.join(lrc.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ListSizeCall lsc) {
-		return String.format("%s.size()", lsc.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(MainMeth mainMeth) {
-		return "public static void main(String[] args)";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapContainsKeyCall mapContainsKeyCall) {
-		return String.format("%s.containsKey(%s)",
-				mapContainsKeyCall.getExpression(),
-				StringUtils.join(mapContainsKeyCall.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapEntryGetKeyCall mapEntryGetKeyCall) {
-		return String.format("%s.getKey()", mapEntryGetKeyCall.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapEntryGetValueCall mapEntryGetKeyCall) {
-		return String.format("%s.getValue()",
-				mapEntryGetKeyCall.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapGetCall mapGetCall) {
-		return String.format("%s.get(%s)", mapGetCall.getExpression(),
-				StringUtils.join(mapGetCall.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapGetIteratorCall mapGetIteratorCall) {
-		return String.format("%s.getIterator()",
-				mapGetIteratorCall.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapIsEmptyCall mapIsEmptyCall) {
-		return String.format("%s.isEmpty()", mapIsEmptyCall.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapPutCall mapPutCall) {
-		return String.format("%s.put(%s)", mapPutCall.getExpression(),
-				StringUtils.join(mapPutCall.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapRemoveCall mapRemoveCall) {
-		return String.format("%s.remove(%s)", mapRemoveCall.getExpression(),
-				StringUtils.join(mapRemoveCall.getParameters(), ", "));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(MapSizeCall mapSizeCall) {
-		return String.format("%s.size()", mapSizeCall.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(ParentCall parentCall) {
-		String out = "super(";
-		if (parentCall.getParameters() != null) {
-			out += StringUtils.join(parentCall.getParameters(), ", ");
-		}
-		out += ")";
-		return out;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(SystemOutDependency systemOutDependency) {
-		return "noprint";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(SystemOutPrintCall systemOutPrintCall) {
-		return String.format("System.out.println(%s)",
-				StringUtils.join(systemOutPrintCall.getParameters(), ","));
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(ToStringCall tsc) {
-		return String.format("%s.toString()", tsc.getTarget());
-
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeBool typeBool) {
-		return "Boolean";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeDecimal typeReal) {
-		return "Double";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeChar typeChar) {
-		return "char";
-	}
-
-	public String getCode(TypeDependency typeDependency) {
-		if (typeDependency.getType() instanceof TypeList) {
-			return "java.util.ArrayList";
-		}
-		if (typeDependency.getType() instanceof TypeMap) {
-			return "java.util.HashMap";
-		}
-		if (typeDependency.getType() instanceof TypeEntry) {
-			return "java.util.Map";
-		}
-		return super.getCode(typeDependency);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeEntry typeEntry) {
-		return String.format("Map.Entry<%s, %s>", typeEntry.getKeyType(),
-				typeEntry.getElementType());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeInt typeInt) {
-		return "Integer";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeList typeList) {
-
-		IType elementType = typeList.getElementType();
-		if (elementType == null) {
-			elementType = TypeObject.INSTANCE;
-		}
-		return String.format("ArrayList<%s>", elementType);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeMap typeMap) {
-		return String.format("HashMap<%s, %s>", typeMap.getKeyType(),
-				typeMap.getElementType());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeObject typeObject) {
-		return "Object";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeString typeString) {
-		return "String";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public String getCode(Modifier modifier) {
-		if (modifier == Modifier.OVERRIDE) {
-			return "";
-		}
-		if (modifier == Modifier.VIRTUAL) {
-			return "";
-		}
-
-		return modifier.name().toLowerCase();
+	public String getCode(CustomDependency customDependency) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -347,145 +316,37 @@ public class JsGenerator extends CommonCodeGenerator /*
 		return null;
 	}
 
-	// @Override
-	public String printClass(ClassDef classDef) {
-		StringBuilder sb = new StringBuilder(String.format(
-				"// Platform: %s\n\n", classDef.getPlatform()));
-		// print the package containing the class
-		if (classDef.getPpackage() != null)
-			sb = sb.append(String.format("package %s;\n\n",
-					classDef.getPackageName()));
-		// print the includes
-		Set<String> dependencies = GeneratorHelper.printDependencies(classDef);
-		if (!dependencies.isEmpty()) {
-			for (String dependency : dependencies) {
-				if (dependency != "noprint" && dependency.contains("."))
-					sb = sb.append(String.format("import %s;\n", dependency));
-			}
-
-			sb = sb.append("\n");
-		}
-		// print the class prototype
-		sb = sb.append(String.format("%s %s %s",
-				StringUtils.join(classDef.getModifiers(), ' '),
-				classDef.isInterface() ? "interface" : "class",
-				classDef.getName()));
-		if (classDef.getParentClass() != null)
-			sb = sb.append(String.format(" extends %s",
-					classDef.getParentClass()));
-		if (!classDef.getInterfaces().isEmpty())
-			sb = sb.append(String.format(" interfaces %s",
-					StringUtils.join(classDef.getInterfaces(), ", ")));
-		sb = sb.append(" {\n\n");
-		// print the fields
-		for (Field field : classDef.getFields())
-			sb = sb.append(formatIndented("%-1%s;\n\n", field));
-		// print the methods
-		for (Meth meth : classDef.getMethods()) {
-			if (classDef.isInterface()) {
-				sb = sb.append(formatIndented("%-1%s;\n\n", meth.getHeader()));
-			} else {
-				if (meth.isConstructor()) {
-					sb = sb.append(formatIndented("%-1%s {\n%-2%s;%2%-1}\n\n",
-							meth.getHeader(), ((Constructor) meth)
-									.getInitCalls().get(0), meth.getBlock()));
-				} else {
-					sb = sb.append(formatIndented("%-1%s {%2%-1}\n\n",
-							meth.getHeader(), meth.getBlock()));
-				}
-			}
-		}
-		return sb.toString() + "}";
-	}
-
 	@Override
 	public String getCode(Throw throwStatement) {
-		return String.format("throw %s", throwStatement.getExpression());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(Catch catchStatement) {
-		return formatIndented("catch (%s %s) {%1}", catchStatement
-				.getParameter().getType(), catchStatement.getParameter()
-				.getName(), catchStatement.getBlock());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(Try tryStatement) {
-		String ret = formatIndented("try {%1}", tryStatement.getBlock());
-		for (Catch c : tryStatement.getCatches()) {
-			ret += " " + c;
-		}
-		if (!tryStatement.getFinilyBlock().getStatements().isEmpty())
-			ret += formatIndented(" finally {%1}",
-					tryStatement.getFinilyBlock());
-		return ret;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getCode(TypeException typeException) {
-		switch (typeException.getKind()) {
-		case GLOBAL:
-			return "Exception";
-		case ARITHMETIC:
-			return "ArithmeticException";
-		case COLLECTION:
-			return "ArrayStoreException";
-		case CAST:
-			return "ClassCastException";
-		case ENUM:
-			return "EnumConstantNotPresentException";
-		case ARGUMENT:
-			return "IllegalArgumentException";
-		case THREAD:
-			return "IllegalMonitorStateException";
-		case STATE:
-			return "IllegalStateException";
-		case ARRAY:
-			return "IndexOutOfBoundsException";
-		case ARRAYSIZE:
-			return "NegativeArraySizeException";
-		case NULLREFERENCE:
-			return "NullPointerException";
-		case SECURITY:
-			return "SecurityException";
-		case TYPE:
-			return "TypeNotPresentException";
-		case UNSUPORTED:
-			return "UnsupportedOperationException";
-		case CLASSNOTFOUND:
-			return "ClassNotFoundException";
-		case DEFAULT:
-			return "CloneNotSupportedException";
-		case ACCESS:
-			return "IllegalAccessException";
-		case NEWINSTANCE:
-			return "InstantiationException";
-		case INTERUPT:
-			return "InterruptedException";
-		case NOSUCHFIELD:
-			return "NoSuchFieldException";
-		case NOSUCHMETH:
-			return "NoSuchMethodException";
-		default:
-			return typeException.getName();
-		}
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public String getCode(RecognizedDependency recognizedDependency) {
-		
-		List<String> imports = GeneratorMatcher.matchImports(recognizedDependency.getName());
-		if(imports.isEmpty())
-			return "/* import "+recognizedDependency.getName()+" not generated by GOOL, passed on. */";
-		String result = "";
-		for (String Import : imports) {
-			if (Import.startsWith("+"))
-				Import = Import.substring(1);
-			result += "import " + Import + ";\n";
-		}
-		return result;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	
 
 
 }
