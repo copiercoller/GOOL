@@ -88,8 +88,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class JsGenerator extends CommonCodeGenerator /*
-														 * implements
-														 * CodeGeneratorNoVelocity
+														 * implementsCodeGeneratorNoVelocity
+														 * 
 														 */{
 
 	private static Map<String, Dependency> customDependencies = new HashMap<String, Dependency>();
@@ -168,8 +168,7 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(MainMeth mainMeth) {
-		// TODO Auto-generated method stub
-		return null;
+		return "main()";
 	}
 
 	@Override
@@ -234,14 +233,12 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(SystemOutDependency systemOutDependency) {
-		// TODO Auto-generated method stub
-		return null;
+		return "test";
 	}
 
 	@Override
 	public String getCode(SystemOutPrintCall systemOutPrintCall) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("windows.alert(%s)",systemOutPrintCall.getParameters().get(0));
 	}
 
 	@Override
@@ -300,8 +297,7 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(TypeString typeString) {
-		// TODO Auto-generated method stub
-		return null;
+		return "String";
 	}
 
 	@Override
@@ -345,8 +341,57 @@ public class JsGenerator extends CommonCodeGenerator /*
 		// TODO Auto-generated method stub
 		return null;
 	}
+	//@Override
+	public String printClass(ClassDef classDef) {
+			//TODO refaire toute la partie commenté 
+			StringBuilder sb = new StringBuilder(String.format(
+					"// Platform: %s\n\n", classDef.getPlatform()));
+			/*
+			// print the package containing the class
+			if (classDef.getPpackage() != null)
+				sb = sb.append(String.format("package %s;\n\n",
+						classDef.getPackageName()));
+			// print the includes
+			Set<String> dependencies = GeneratorHelper.printDependencies(classDef);
+			if (!dependencies.isEmpty()) {
+				for (String dependency : dependencies) {
+					if (dependency != "noprint" && dependency.contains("."))
+						sb = sb.append(String.format("import %s;\n", dependency));
+				}
 
-	
+				sb = sb.append("\n");
+			}
+			// print the class prototype
+			sb = sb.append(String.format("%s %s %s",
+					StringUtils.join(classDef.getModifiers(), ' '),
+					classDef.isInterface() ? "interface" : "class",
+					classDef.getName()));
+			if (classDef.getParentClass() != null)
+				sb = sb.append(String.format(" extends %s",
+						classDef.getParentClass()));
+			if (!classDef.getInterfaces().isEmpty())
+				sb = sb.append(String.format(" interfaces %s",
+						StringUtils.join(classDef.getInterfaces(), ", ")));
+			sb = sb.append(" {\n\n");*/
+			sb.append("<script>");
+			// print the fields
+			for (Field field : classDef.getFields())
+				sb = sb.append(formatIndented("%-1%s;\n\n", field));
+			// print the methods
+			for (Meth meth : classDef.getMethods()) {
+				if (classDef.isInterface()) {
+					sb = sb.append(formatIndented("%-1%s;\n\n", meth.getHeader()));
+				} else {
+					if (meth.isConstructor()) {
+						sb = sb.append(formatIndented("%-1%s {\n%-2%s;%2%-1}\n\n",meth.getHeader(), ((Constructor) meth).getInitCalls().get(0), meth.getBlock()));
+					} else {
+						sb = sb.append(formatIndented("%-1%s {%2%-1}\n\n",meth.getHeader(), meth.getBlock()));
+					}
+				}
+			}
 
+			return sb.toString() + "</script>";
+			
+		}
 
 }
