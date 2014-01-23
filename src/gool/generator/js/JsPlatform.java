@@ -19,7 +19,7 @@ package gool.generator.js;
 
 import gool.Settings;
 import gool.executor.common.SpecificCompiler;
-import gool.executor.java.JavaCompiler;
+import gool.executor.js.JSCompiler;
 import gool.generator.common.CodePrinter;
 import gool.generator.common.Platform;
 
@@ -51,7 +51,7 @@ public final class JsPlatform extends Platform {
 
 	@Override
 	protected SpecificCompiler initializeCompiler() {
-		return new JavaCompiler(new File(outputDir), new ArrayList<File>());
+		return new JSCompiler(new File(outputDir), new ArrayList<File>());
 	}
 
 	/**
