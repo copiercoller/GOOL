@@ -101,6 +101,11 @@ public class JsGenerator extends CommonCodeGenerator /*
 	}
 
 	@Override
+	public String getCode(Meth meth) {
+		return String.format("%s %s (%s)",meth.getType(), meth.getName(),StringUtils.join(meth.getParams(), ", "));
+	}
+	
+	@Override
 	public String getCode(ClassNew classNew) {
 		// TODO Auto-generated method stub
 		return null;
@@ -238,7 +243,7 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(SystemOutPrintCall systemOutPrintCall) {
-		return String.format("windows.alert(%s)",systemOutPrintCall.getParameters().get(0));
+		return String.format("process.stdout.write(%s)",systemOutPrintCall.getParameters().get(0));
 	}
 
 	@Override

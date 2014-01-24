@@ -34,17 +34,16 @@ public class JSCompiler extends SpecificCompiler {
 	}
 
 	@Override
-	public File compileToExecutable(List<File> files, File mainFile,
-			List<File> classPath, List<String> args)
+	public File compileToExecutable(List<File> files, File mainFile,List<File> classPath, List<String> args)
 			throws FileNotFoundException {
-		return null;
+		return files.get(0);
 	}
 
 	@Override
 	public File compileToObjectFile(List<File> files, File mainFile,
 			List<File> classPath, List<String> args)
 			throws FileNotFoundException {
-		return null;
+		return mainFile;
 	}
 
 	@Override

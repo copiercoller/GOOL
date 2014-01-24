@@ -23,6 +23,7 @@ import gool.generator.common.Platform;
 import gool.generator.cpp.CppPlatform;
 import gool.generator.csharp.CSharpPlatform;
 import gool.generator.java.JavaPlatform;
+import gool.generator.js.JsPlatform;
 import gool.generator.python.PythonPlatform;
 import gool.generator.objc.ObjcPlatform;
 
@@ -48,10 +49,11 @@ public class GoolTest {
 	 */
 	private List<Platform> platforms = Arrays.asList(
 
-			(Platform) JavaPlatform.getInstance(),
+			(Platform) JsPlatform.getInstance()
+			/*(Platform) JavaPlatform.getInstance(),
 			(Platform) CSharpPlatform.getInstance(),
 			(Platform) CppPlatform.getInstance(),
-			(Platform) PythonPlatform.getInstance() 
+			(Platform) PythonPlatform.getInstance() */
 //			 (Platform) AndroidPlatform.getInstance() ,
 			 //(Platform) ObjcPlatform.getInstance()
 

@@ -46,7 +46,6 @@ $Helper.printRecognizedDependencies($class)
 ## [modifiers] interface/class [extends ...] [implements ...]
 ## uncomment following line
 ##join($class.Modifiers " ") #if($class.isInterface()) interface#else class#end $class.Name #if($class.ParentClass)extends $class.ParentClass#end#interfaces($class.Interfaces) {
-<script>
 ## Declare its fields
 #foreach( $field in $class.Fields )
 ## The following will call field.toString() 
@@ -68,4 +67,4 @@ ${method.Block}
     }#end
 #end
 #end
-</script>
+main();
