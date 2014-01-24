@@ -488,7 +488,7 @@ public class GoolTest {
 						.surroundWithClassMain(
 								"ArrayList l = new ArrayList();l.add(\"hola\");l.remove(\"hola\");l.add(\"hola\");System.out.println(l.contains(\"hola\"));",
 								MAIN_CLASS_NAME);
-		Assert.fail("Not implemented");
+		compareResultsDifferentPlatforms(input, "true");
 	}
 
 	@Test

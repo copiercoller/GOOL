@@ -17,6 +17,7 @@
 
 package gool.generator.js;
 
+import gool.ast.core.Assign;
 import gool.ast.core.BinaryOperation;
 import gool.ast.core.Break;
 import gool.ast.core.Case;
@@ -42,6 +43,7 @@ import gool.ast.core.Throw;
 import gool.ast.core.ToStringCall;
 import gool.ast.core.Try;
 import gool.ast.core.TypeDependency;
+import gool.ast.core.VarDeclaration;
 import gool.ast.list.ListAddCall;
 import gool.ast.list.ListContainsCall;
 import gool.ast.list.ListGetCall;
@@ -100,6 +102,7 @@ public class JsGenerator extends CommonCodeGenerator /*
 		customDependencies.put(key, value);
 	}
 
+	
 	@Override
 	public String getCode(Meth meth) {
 		return String.format("%s %s (%s)",meth.getType(), meth.getName(),StringUtils.join(meth.getParams(), ", "));
@@ -107,10 +110,20 @@ public class JsGenerator extends CommonCodeGenerator /*
 	
 	@Override
 	public String getCode(ClassNew classNew) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("new %s(%s)", classNew.getType(),
+				StringUtils.join(classNew.getParameters(), ", "));
 	}
 
+	@Override
+	public String getCode(VarDeclaration varDec) {
+		String initialValue = "";
+		if (varDec.getInitialValue() != null) {
+			initialValue = " = " + varDec.getInitialValue();
+		}
+		return String.format("var %s%s", varDec.getName(),initialValue);
+	}
+	
+	
 	@Override
 	public String getCode(EnhancedForLoop enhancedForLoop) {
 		// TODO Auto-generated method stub
@@ -125,20 +138,20 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(ListAddCall lac) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.push(%s)", lac.getExpression(),
+				StringUtils.join(lac.getParameters(), ", "));
 	}
 
 	@Override
 	public String getCode(ListContainsCall lcc) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.indexOf(%s)==-1?false:true", lcc.getExpression(),
+				StringUtils.join(lcc.getParameters(), ", "));
 	}
 
 	@Override
 	public String getCode(ListGetCall lgc) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s[%s]", lgc.getExpression(),
+				StringUtils.join(lgc.getParameters(), ", "));
 	}
 
 	@Override
@@ -149,26 +162,23 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(ListIsEmptyCall liec) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.length==0?true:false", liec.getExpression());
+
 	}
 
-	@Override
 	public String getCode(ListRemoveAtCall lrc) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.splice(%s,1)", lrc.getExpression(),
+				StringUtils.join(lrc.getParameters(), ", "));
 	}
 
-	@Override
 	public String getCode(ListRemoveCall lrc) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.splice(%s.indexOf(%s),1)", lrc.getExpression(),lrc.getExpression(),
+				StringUtils.join(lrc.getParameters(), ", "));
 	}
 
 	@Override
 	public String getCode(ListSizeCall lsc) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.length", lsc.getExpression());
 	}
 
 	@Override
@@ -243,61 +253,53 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(SystemOutPrintCall systemOutPrintCall) {
-		return String.format("process.stdout.write(%s)",systemOutPrintCall.getParameters().get(0));
+		return String.format("process.stdout.write(String(%s))",systemOutPrintCall.getParameters().get(0));
 	}
 
 	@Override
 	public String getCode(ToStringCall tsc) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Auto-generated method stub à tester
+		return String.format("String(%s)",tsc.getTarget());
 	}
 
 	@Override
 	public String getCode(TypeBool typeBool) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Boolean";
 	}
 
 	@Override
 	public String getCode(TypeDecimal typeReal) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Number";
 	}
 
 	@Override
 	public String getCode(TypeChar typeChar) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Char";
 	}
 
 	@Override
 	public String getCode(TypeEntry typeEntry) {
-		// TODO Auto-generated method stub
-		return null;
+		return "var";
 	}
 
 	@Override
 	public String getCode(TypeInt typeInt) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Number";
 	}
 
 	@Override
 	public String getCode(TypeList typeList) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Array";
 	}
 
 	@Override
 	public String getCode(TypeMap typeMap) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Array";
 	}
 
 	@Override
 	public String getCode(TypeObject typeObject) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Null";
 	}
 
 	@Override
