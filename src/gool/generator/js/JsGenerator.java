@@ -367,7 +367,7 @@ public class JsGenerator extends CommonCodeGenerator /*
 				}
 
 				sb = sb.append("\n");
-			}
+			}*//*
 			// print the class prototype
 			sb = sb.append(String.format("%s %s %s",
 					StringUtils.join(classDef.getModifiers(), ' '),
@@ -380,19 +380,50 @@ public class JsGenerator extends CommonCodeGenerator /*
 				sb = sb.append(String.format(" interfaces %s",
 						StringUtils.join(classDef.getInterfaces(), ", ")));
 			sb = sb.append(" {\n\n");*/
+			// print the class prototype
 			sb.append("<script>");
+			boolean c = false;
+			for (Meth meth : classDef.getMethods()) {
+				if (meth.isConstructor()) {
+					sb = sb.append(String.format("function %-1%s {\n%-2%s;%2%-1\n\n",
+							meth.getHeader(), 
+							((Constructor) meth).getInitCalls().get(0), 
+							meth.getBlock());
+					c= true;
+					break;
+				} 
+			}
+			if(!c){
+				sb = sb.append(String.format("function %s() {\n\n",classDef.getName()));
+			}
+				
+				/*if (!classDef.getInterfaces().isEmpty())
+					sb = sb.append(String.format(" interfaces %s",
+							StringUtils.join(classDef.getInterfaces(), ", ")));*/
+				if (classDef.getParentClass() != null)
+					sb = sb.append(String.format(" %s.apply(this,arguments);",
+							classDef.getParentClass()));
+
 			// print the fields
 			for (Field field : classDef.getFields())
 				sb = sb.append(formatIndented("%-1%s;\n\n", field));
 			// print the methods
 			for (Meth meth : classDef.getMethods()) {
-				if (classDef.isInterface()) {
+				/*if (classDef.isInterface()) {
 					sb = sb.append(formatIndented("%-1%s;\n\n", meth.getHeader()));
-				} else {
-					if (meth.isConstructor()) {
-						sb = sb.append(formatIndented("%-1%s {\n%-2%s;%2%-1}\n\n",meth.getHeader(), ((Constructor) meth).getInitCalls().get(0), meth.getBlock()));
-					} else {
-						sb = sb.append(formatIndented("%-1%s {%2%-1}\n\n",meth.getHeader(), meth.getBlock()));
+				} else*/ {
+					if (!meth.isConstructor()) {
+						sb = sb.append(formatIndented("this.%-1%s = function(",meth.getName());
+						c=true;
+						for( VarDeclaration varDec : meth.getParams()  ){//
+							if(!c){ 
+								sb = sb.append(", ");
+								c = false;
+							}
+							sb = sb.append(varDec.getName());
+						}
+						
+						sb = sb.append(formatIndented(") {%2%-1}\n\n",meth.getBlock()));
 					}
 				}
 			}
