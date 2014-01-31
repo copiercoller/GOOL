@@ -35,13 +35,6 @@
 ## (Velocity Note: the .Platform is short for .getPlatform().)
 // Platform: $class.Platform
 
-## Print out the package when there is one
-#if($class.Ppackage)package ${class.PackageName};#end
-
-## Print out the imports
-#includes ($Helper.printDependencies($class))
-$Helper.printRecognizedDependencies($class)
-
 ## Declare the class with the format: 
 ## [modifiers] interface/class [extends ...] [implements ...]
 ## uncomment following line
@@ -59,9 +52,9 @@ $Helper.printRecognizedDependencies($class)
 	#if($method.isGoolMethodImplementation())$method#else
     function ${method.Header}#if($class.isInterface());#else {
 #if($method.isConstructor)
-	#foreach( $parentCall in $method.ParentCalls )
-		$parentCall
-	#end
+	## #foreach( $parentCall in $method.ParentCalls )
+	##	$parentCall
+	## #end
 #end        
 ${method.Block}
     }#end

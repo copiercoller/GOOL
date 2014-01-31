@@ -50,7 +50,7 @@ public class GoolTest {
 	private List<Platform> platforms = Arrays.asList(
 
 			(Platform) JsPlatform.getInstance()
-			/*(Platform) JavaPlatform.getInstance(),
+			/* (Platform) JavaPlatform.getInstance(),
 			(Platform) CSharpPlatform.getInstance(),
 			(Platform) CppPlatform.getInstance(),
 			(Platform) PythonPlatform.getInstance() */
@@ -168,6 +168,7 @@ public class GoolTest {
 		// Matching of the GoolFile library class and of its method
 		// work only for the Java target language at the moment,
 		// so we exclude the other platforms for this test.
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		excludePlatformForThisTest((Platform) CSharpPlatform.getInstance());
 		excludePlatformForThisTest((Platform) CppPlatform.getInstance());
 		excludePlatformForThisTest((Platform) PythonPlatform.getInstance());
@@ -211,6 +212,7 @@ public class GoolTest {
 		// Matching of the io GOOL library with classes and methods
 		// of the output language work only for the Java target at the moment,
 		// so we exclude the other platforms for this test.
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		excludePlatformForThisTest((Platform) CSharpPlatform.getInstance());
 		excludePlatformForThisTest((Platform) CppPlatform.getInstance());
 		excludePlatformForThisTest((Platform) PythonPlatform.getInstance());
@@ -253,6 +255,7 @@ public class GoolTest {
 		// Matching of the io GOOL library with classes and methods
 		// of the output language work only for the Java target at the moment,
 		// so we exclude the other platforms for this test.
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		excludePlatformForThisTest((Platform) CSharpPlatform.getInstance());
 		excludePlatformForThisTest((Platform) CppPlatform.getInstance());
 		excludePlatformForThisTest((Platform) PythonPlatform.getInstance());
@@ -276,6 +279,7 @@ public class GoolTest {
 		// Generation of exceptions do not work in some of the target language
 		// at the
 		// moment, so we exclude their respective platform for this test.
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		excludePlatformForThisTest((Platform) CppPlatform.getInstance());
 		excludePlatformForThisTest((Platform) AndroidPlatform.getInstance());
 		excludePlatformForThisTest((Platform) ObjcPlatform.getInstance());
@@ -354,6 +358,7 @@ public class GoolTest {
 						"public void printr(){System.out.println(2 + 2);} public static void main(String[] args){ Test t = new Test(); t.printr();}",
 						MAIN_CLASS_NAME, "");
 		String expected = "4";
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		compareResultsDifferentPlatforms(input, expected);
 	}
 
@@ -371,7 +376,7 @@ public class GoolTest {
 		excludePlatformForThisTest((Platform) CppPlatform.getInstance());
 		excludePlatformForThisTest((Platform) PythonPlatform.getInstance());
 		excludePlatformForThisTest((Platform) ObjcPlatform.getInstance());
-
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		compareResultsDifferentPlatforms(input, expected);
 	}
 
@@ -555,7 +560,7 @@ public class GoolTest {
 		excludePlatformForThisTest((Platform) CppPlatform.getInstance());
 		excludePlatformForThisTest((Platform) AndroidPlatform.getInstance());
 		excludePlatformForThisTest((Platform) ObjcPlatform.getInstance());
-
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		compareResultsDifferentPlatforms(input, expected);
 	}
 
@@ -640,6 +645,7 @@ public class GoolTest {
 				+ "public void ok() {"
 				+ "System.out.println(\"OK\");"
 				+ "}}";
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		compareResultsDifferentPlatforms(input, "");
 	}
 	
@@ -657,6 +663,7 @@ public class GoolTest {
 				+ "interface B {"
 				+ "void ok();"
 				+ "}";
+		excludePlatformForThisTest((Platform) JsPlatform.getInstance());
 		compareResultsDifferentPlatforms(input, "OK");
 	}
 }

@@ -105,7 +105,18 @@ public class JsGenerator extends CommonCodeGenerator /*
 	
 	@Override
 	public String getCode(Meth meth) {
-		return String.format("%s %s (%s)",meth.getType(), meth.getName(),StringUtils.join(meth.getParams(), ", "));
+		String out= String.format(" %s (", meth.getName() );
+		boolean f = true;
+		for(VarDeclaration var : meth.getParams() )
+		{
+			if ( f)
+				f=false;
+			else
+				out+=",";
+			out+=var.getName();
+		}
+		out+=")";
+		return out;
 	}
 	
 	@Override
@@ -113,6 +124,7 @@ public class JsGenerator extends CommonCodeGenerator /*
 		return String.format("new %s(%s)", classNew.getType(),
 				StringUtils.join(classNew.getParameters(), ", "));
 	}
+
 
 	@Override
 	public String getCode(VarDeclaration varDec) {
@@ -126,14 +138,15 @@ public class JsGenerator extends CommonCodeGenerator /*
 	
 	@Override
 	public String getCode(EnhancedForLoop enhancedForLoop) {
-		// TODO Auto-generated method stub
-		return null;
+		return formatIndented( "for (KeyOnForeach in %s){ \n\t %s = %s[KeyOnForeach]; %1}",
+				enhancedForLoop.getExpression(),enhancedForLoop.getVarDec(),enhancedForLoop.getExpression(),
+				enhancedForLoop.getStatements());
 	}
 
 	@Override
 	public String getCode(EqualsCall equalsCall) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
@@ -157,7 +170,7 @@ public class JsGenerator extends CommonCodeGenerator /*
 	@Override
 	public String getCode(ListGetIteratorCall lgic) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
@@ -188,67 +201,66 @@ public class JsGenerator extends CommonCodeGenerator /*
 
 	@Override
 	public String getCode(MapContainsKeyCall mapContainsKeyCall) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.indexOf(%s)==-1?false:true", mapContainsKeyCall.getExpression(),
+				StringUtils.join(mapContainsKeyCall.getParameters(), ", "));
 	}
 
 	@Override
 	public String getCode(MapEntryGetKeyCall mapEntryGetKeyCall) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(MapEntryGetValueCall mapEntryGetKeyCall) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(MapGetCall mapGetCall) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s[%s]", mapGetCall.getExpression(),
+				StringUtils.join(mapGetCall.getParameters(), ", "));
 	}
 
 	@Override
 	public String getCode(MapGetIteratorCall mapGetIteratorCall) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(MapIsEmptyCall mapIsEmptyCall) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.length==0?true:false", mapIsEmptyCall.getExpression());
 	}
 
 	@Override
 	public String getCode(MapPutCall mapPutCall) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s[%s]=(%s)",mapPutCall.getExpression(),
+				mapPutCall.getParameters().get(0), mapPutCall.getParameters().get(1));
 	}
 
 	@Override
 	public String getCode(MapRemoveCall mapRemoveCall) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.splice(%s.indexOf(%s),1)", mapRemoveCall.getExpression(),mapRemoveCall.getExpression(),
+				StringUtils.join(mapRemoveCall.getParameters(), ", "));
 	}
 
 	@Override
 	public String getCode(MapSizeCall mapSizeCall) {
 		// TODO Auto-generated method stub
-		return null;
+		return String.format("%s.length", mapSizeCall.getExpression());
 	}
 
 	@Override
 	public String getCode(ParentCall parentCall) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(SystemOutDependency systemOutDependency) {
-		return "test";
+		return "not yet implemented";
 	}
 
 	@Override
@@ -310,85 +322,57 @@ public class JsGenerator extends CommonCodeGenerator /*
 	@Override
 	public String getCode(CustomDependency customDependency) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(SystemCommandDependency systemCommandDependency) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(Throw throwStatement) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(Catch catchStatement) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(Try tryStatement) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(TypeException typeException) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 
 	@Override
 	public String getCode(RecognizedDependency recognizedDependency) {
 		// TODO Auto-generated method stub
-		return null;
+		return "not yet implemented";
 	}
 	//@Override
 	public String printClass(ClassDef classDef) {
 			//TODO refaire toute la partie commenté 
 			StringBuilder sb = new StringBuilder(String.format(
 					"// Platform: %s\n\n", classDef.getPlatform()));
-			/*
-			// print the package containing the class
-			if (classDef.getPpackage() != null)
-				sb = sb.append(String.format("package %s;\n\n",
-						classDef.getPackageName()));
-			// print the includes
-			Set<String> dependencies = GeneratorHelper.printDependencies(classDef);
-			if (!dependencies.isEmpty()) {
-				for (String dependency : dependencies) {
-					if (dependency != "noprint" && dependency.contains("."))
-						sb = sb.append(String.format("import %s;\n", dependency));
-				}
-
-				sb = sb.append("\n");
-			}*//*
 			// print the class prototype
-			sb = sb.append(String.format("%s %s %s",
-					StringUtils.join(classDef.getModifiers(), ' '),
-					classDef.isInterface() ? "interface" : "class",
-					classDef.getName()));
-			if (classDef.getParentClass() != null)
-				sb = sb.append(String.format(" extends %s",
-						classDef.getParentClass()));
-			if (!classDef.getInterfaces().isEmpty())
-				sb = sb.append(String.format(" interfaces %s",
-						StringUtils.join(classDef.getInterfaces(), ", ")));
-			sb = sb.append(" {\n\n");*/
-			// print the class prototype
-			sb.append("<script>");
 			boolean c = false;
 			for (Meth meth : classDef.getMethods()) {
 				if (meth.isConstructor()) {
 					sb = sb.append(String.format("function %-1%s {\n%-2%s;%2%-1\n\n",
 							meth.getHeader(), 
 							((Constructor) meth).getInitCalls().get(0), 
-							meth.getBlock());
+							meth.getBlock()));
 					c= true;
 					break;
 				} 
@@ -397,9 +381,6 @@ public class JsGenerator extends CommonCodeGenerator /*
 				sb = sb.append(String.format("function %s() {\n\n",classDef.getName()));
 			}
 				
-				/*if (!classDef.getInterfaces().isEmpty())
-					sb = sb.append(String.format(" interfaces %s",
-							StringUtils.join(classDef.getInterfaces(), ", ")));*/
 				if (classDef.getParentClass() != null)
 					sb = sb.append(String.format(" %s.apply(this,arguments);",
 							classDef.getParentClass()));
@@ -408,12 +389,9 @@ public class JsGenerator extends CommonCodeGenerator /*
 			for (Field field : classDef.getFields())
 				sb = sb.append(formatIndented("%-1%s;\n\n", field));
 			// print the methods
-			for (Meth meth : classDef.getMethods()) {
-				/*if (classDef.isInterface()) {
-					sb = sb.append(formatIndented("%-1%s;\n\n", meth.getHeader()));
-				} else*/ {
+			for (Meth meth : classDef.getMethods()) {{
 					if (!meth.isConstructor()) {
-						sb = sb.append(formatIndented("this.%-1%s = function(",meth.getName());
+						sb = sb.append(formatIndented("this.%-1%s = function(",meth.getName()));
 						c=true;
 						for( VarDeclaration varDec : meth.getParams()  ){//
 							if(!c){ 
@@ -428,8 +406,22 @@ public class JsGenerator extends CommonCodeGenerator /*
 				}
 			}
 
-			return sb.toString() + "</script>";
+			return sb.toString();
 			
 		}
 
+	@Override
+	public String getCode(Field field) {
+		String out = String.format(" var %s", field.getName());
+		if (field.getType().toString().equals("noprint"))
+			return "";
+		if (field.getDefaultValue() != null) {
+			// Notice that this will call a toString() on the field.defaultValue
+			// Which will become a JavaGenerator.getCode(defaultValue)
+			// Hence this seemingly simple statement
+			// Is in fact a recursive descent on the abstract GOOL tree.
+			out = String.format("%s = %s", out, field.getDefaultValue());
+		}
+		return out;
+	}
 }
